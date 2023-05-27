@@ -271,3 +271,12 @@ sst25vf032b options:
 ```
 
 To add a piece of emulated or virtualised hardware to your VM, simply add it to `INSTANCEDIR/vm.sh`.
+
+## OS-specific notes
+
+### FreeBSD
+
+The default OS disk size of 5G is too small. You'll want to do 10G or so.
+There is no cloud-init on FreeBSD, and it will consequently not phone home. The instance boots just fine though and
+the default login is root, without a password (who would have thought, on BSD of all things).
+
