@@ -9,7 +9,7 @@ optional = false
 
 [[package]]
 name = "requests"
-version = "2.28.2"
+version = "2.31.0"
 optional = false
 
 [[package]]
