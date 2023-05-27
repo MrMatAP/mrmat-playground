@@ -5,6 +5,7 @@ import requests
 import rich.progress
 
 from mrmat_playground import console
+from mrmat_playground.executor import execute
 from mrmat_playground.model import Cloud
 
 
@@ -20,8 +21,10 @@ class ImageCommands:
         'ubuntu-kinetic': 'https://cloud-images.ubuntu.com/kinetic/current/kinetic-server-cloudimg-arm64.img',
         'ubuntu-lunar': 'https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-arm64.img',
         'ubuntu-mantic': 'https://cloud-images.ubuntu.com/mantic/current/mantic-server-cloudimg-arm64.img',
-        'freebsd-14': 'https://download.freebsd.org/ftp/snapshots/VM-IMAGES/14.0-CURRENT/amd64/Latest/'
-                      'FreeBSD-14.0-CURRENT-amd64.qcow2.xz'
+        'freebsd-14': 'https://download.freebsd.org/ftp/snapshots/VM-IMAGES/14.0-CURRENT/aarch64/Latest/'
+                      'FreeBSD-14.0-CURRENT-arm64-aarch64.qcow2.xz',
+        'fedora-coreos-stable': 'https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/38.20230430.3.1/'
+                                'aarch64/fedora-coreos-38.20230430.3.1-qemu.aarch64.qcow2.xz'
     }
 
     @staticmethod
@@ -33,7 +36,10 @@ class ImageCommands:
             console.log(f'ERROR: Image with name {args.name} is not known. Please download it manually.')
             return 1
         image_url = ImageCommands.IMAGE_URLS.get(args.name)
-        image_path = cloud.images_path.joinpath(f'{args.name}.qcow2')
+        if image_url.endswith('.xz'):
+            image_path = cloud.images_path.joinpath(f'{args.name}.qcow2.xz')
+        else:
+            image_path = cloud.images_path.joinpath(f'{args.name}.qcow2')
         if image_path.exists():
             console.log(f'Image at path {image_path} already exists. Please remove it first.')
             return 1
@@ -53,3 +59,8 @@ class ImageCommands:
                     i.write(chunk)
                     current += 8192
                     progress.update(download_task, completed=current / size * 100, refresh=True)
+        if image_url.endswith('.xz'):
+            resp = execute('xz',
+                           ['-d', image_path])
+            console.log(f'Unpacked image at {image_path}')
+
