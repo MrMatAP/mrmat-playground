@@ -280,3 +280,8 @@ The default OS disk size of 5G is too small. You'll want to do 10G or so.
 There is no cloud-init on FreeBSD, and it will consequently not phone home. The instance boots just fine though and
 the default login is root, without a password (who would have thought, on BSD of all things).
 
+### CoreOS
+
+Again, 5G is too small, a 10G disk size or so will do.
+Wants ignition or afterburn configuration, which we do not currently have. They seem to have abandoned cloud-init.
+I suppose we can just create another config drive for them...
