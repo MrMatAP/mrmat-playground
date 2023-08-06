@@ -1,13 +1,7 @@
 # MrMat :: Playground
 
-An experimental but efficient way to spin up virtual machines on an ARM-based Mac.
-
->*SECURITY*: We use [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) to perform initial
-> postconfiguration of the instances The default configuration will create two users, 'ansible' using an SSH 
-> authorized key and 'cloudadmin' with an admin password you specify during the initial creation of the cloud
-> playground. The 'cloudadmin' password is currently stored as clear-text in the cloud-init configuration and 
-> in the cloud database. VMs are consequently not meant for production or in any situation where they directly
-> expose themselves towards an untrusted environment.
+> **SUPERSEDED:** All further development happens on [Kaso Mashin](https://github.com/MrMatAP/kaso-mashin). Please see
+> there instead.
 
 ## Background
 
